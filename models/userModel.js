@@ -5,12 +5,9 @@ const UserSchema = new Schema({
     name: String,
     email: String,
     avatarUrl: String,
-    Gender: String,
-    shop: {type: Schema.Types.ObjectId, ref: 'Shop'},
-    order: [{
-        product: {type: Schema.Types.ObjectId, ref: 'Product'},
-        amount: Number
-    }]
+    gender: String,
+    shop: [{type: Schema.Types.ObjectId, ref: 'Shop'}],
+    order: [{type: Schema.Types.ObjectId, ref: 'Order'}]
 },{
     timestamps: true
 })
