@@ -1,17 +1,42 @@
 const express = require ('express');
 const userRouter = express.Router();
-const userModel = require("")
+const userModel = require("../models/userModel")
 
+//Lấy thông tin người dùng
 userRouter.get("/:userId",(req,res)=>{
-    UserModel.findById(req.params.userId,(err,user)=>{
+    userModel.findById(req.params.userId,(err,user)=>{
         if(err) res.status(500).send({success:0,err})
         else res.send({success:1,user})
     })
 })
 
+//Lấy thông tin các shop của người dùng
+userRouter.get("/:userId/shop",(req,res)=>{
+    userModel.findById(req.params.userId)
+        .populate('shop')
+        .exec((err,user)=>{
+            if(err) res.status(500).send({success:0,err})
+            else {
+                let shop = user.shop;
+                res.send({success:1,shop})
+            }
+        })
+})
+//Lấy thông tin các sản phẩm đã order
+userRouter.get("/:userId/order",(req,res)=>{
+    userModel.findById(req.params.userId)
+        .populate('order')
+        .exec((err,user)=>{
+            if(err) res.status(500).send({success:0,err})
+            else {
+                let order = user.order;
+                res.send({success:1,order})
+            }
+        })
+})
 userRouter.post("/",(req,res)=>{
     const {name,email,avataUrl,gender}= req.body;
-    UserModel.create(
+    userModel.create(
         {name,email,avataUrl,gender},
         (err,userCreated)=>{
             if(err) res.status(500).send({success:0,err})
