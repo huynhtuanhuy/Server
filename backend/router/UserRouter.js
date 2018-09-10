@@ -35,9 +35,9 @@ userRouter.get("/:userId/order", (req, res) => {
         })
 })
 userRouter.post("/", (req, res) => {
-    const { name, email, avataUrl, gender } = req.body;
+    const { name, email, avatarUrl, gender } = req.body;
     userModel.create(
-        { name, email, avataUrl, gender },
+        { name, email, avatarUrl, gender },
         (err, userCreated) => {
             if (err) res.status(500).send({ success: 0, err })
             else res.status(201).send({ success: 1, userCreated })

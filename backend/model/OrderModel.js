@@ -7,6 +7,7 @@ const orderProductSchema = new Schema({
 });
 
 const orderSchema = new Schema({
+    owner: { type: Schema.Types.ObjectId, ref: 'User' },
     address: { type: String, require: true },
     phoneNumber: { type: Number },
     orderList: [orderProductSchema],

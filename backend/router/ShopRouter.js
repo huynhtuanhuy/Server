@@ -1,9 +1,6 @@
 const express = require('express');
 const shopRouter = express.Router();
-
 const shopModel = require('../model/ShopModel');
-const productModel = require('../model/ProductModel');
-const orderModel = require('../model/OrderModel');
 
 shopRouter.use((req, res, next) => {
     console.log("Router api");
@@ -61,22 +58,22 @@ shopRouter.put('/', (req, res) => {
 
 //Lấy thông tin của 1 cửa hàng
 shopRouter.get('/:id', (req,res) => {
-    console.log("kjsgjvsbfv");
     shopModel.findById(req.params.id)
         .populate('owner', "name")
-        // .populate('comment.owner', 'name _id')
-        // .populate('productList')
+        .populate('comments.owner', 'name _id')
+        .populate('productList')
         // .populate('listOrder')
         // .populate('listOrder.orderList.product.shopID', 'owner _id')
-        .exec(shopFound => {
+        .exec((err, shopFound) => {
+            if(err) res.status(500).send({success: 0, err});
             if(!shopFound) res.status(404).send({success: 0, message: 'Shop Not Found'});
             else {
-                console.log(shopFound.owner);
-                console.log("ahih");
-                res.send({success: 1, w: "hu hu"});
+                console.log(shopFound);
+                // console.log("ahih");
+                res.send({success: 1, shopFound});
             };
         })
-        .catch(err => res.status(500).send({success: 0, err}));
+        // .catch(err => res.status(500).send({success: 0, err}));
 })
 
 
