@@ -15,8 +15,8 @@ backend.use('/shop', shopRouter);
 backend.use('/user', userRouter);
 
 
-// let host = 'mongodb://FoodyHoLa:Hola123@ds243212.mlab.com:43212/foodyhoalac';
-let host = 'mongodb://localhost/Project';
+let host = 'mongodb://FoodyHoLa:Hola123@ds243212.mlab.com:43212/foodyhoalac';
+// let host = 'mongodb://localhost/Project';
 mongoose.connect(host, function (err) {
     if (err) {
         console.log(err);

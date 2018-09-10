@@ -41,18 +41,17 @@ shopRouter.put('/:id', (req,res) => {
         .catch(err => res.send({success: 0, err}));
 })
 
-//Lấy tất cả các shop bán hàng sắp xếp từ mới nhất, Giới hạn 20 cửa hàng mỗi request và có NextPageToken
+//Lấy tất cả các shop bán hàng sắp xếp từ mới nhất, Giới hạn 20 cửa hàng mỗi request và có NextPageToken (0, 1, 2, 3, ...)
 shopRouter.put('/', (req, res) => {
     let token = (req.body.nextPageToken) ? req.body.nextPageToken : 0;
     let nextPageToken = token;
     shopModel.find({}, ' -comment ')
         .skip(20 * token)
         .limit(20)
-        // .populate('owner', 'name avaUrl')
+        .populate('owner', 'name avaUrl')
         .then(shops => {
             shopModel.countDocuments()
             .then(count => {
-                console.log(count);
                 nextPageToken = (count > (++ token) * 20) ? (token) : (undefined);
                 res.send({ success: 1, shops, nextPageToken})
             })
@@ -62,17 +61,19 @@ shopRouter.put('/', (req, res) => {
 
 //Lấy thông tin của 1 cửa hàng
 shopRouter.get('/:id', (req,res) => {
+    console.log("kjsgjvsbfv");
     shopModel.findById(req.params.id)
-        // .populate('owner')
-        .populate('comment.owner', 'name _id')
-        .populate('productList')
-        .populate('listOrder')
-        .populate('listOrder.orderList.product.shopID', 'owner _id')
-        .then(shopFound => {
+        .populate('owner', "name")
+        // .populate('comment.owner', 'name _id')
+        // .populate('productList')
+        // .populate('listOrder')
+        // .populate('listOrder.orderList.product.shopID', 'owner _id')
+        .exec(shopFound => {
             if(!shopFound) res.status(404).send({success: 0, message: 'Shop Not Found'});
             else {
-
-                res.send({success: 1, shopFound});
+                console.log(shopFound.owner);
+                console.log("ahih");
+                res.send({success: 1, w: "hu hu"});
             };
         })
         .catch(err => res.status(500).send({success: 0, err}));
