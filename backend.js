@@ -11,7 +11,6 @@ const cors = require('cors');
 
 let backend = express();
 
-backend.use(cors());
 backend.use(session({
     secret: 'Nguoi yeu dau hoi~ em mai la mat troiiii',
     resave: false,
@@ -27,6 +26,7 @@ backend.use(cors({
     credentials: true,
     origin: true
 }))
+
 backend.use(bodyParser.urlencoded({ extended: false }));
 backend.use(bodyParser.json());
 backend.use('/shop', shopRouter);
