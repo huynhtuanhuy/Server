@@ -1,6 +1,6 @@
 const express = require('express');
 const orderRouter = express.Router();
-const orderModel = require("../model/orderModel");
+const orderModel = require("../models/orderModel");
 
 
 //Lấy thông tin sản phẩm

@@ -1,6 +1,6 @@
 const express = require("express");
 const authRouter = express();
-const userModel = require("../model/userModel");
+const userModel = require("../models/userModel");
 const lodash = require('lodash');
 
 

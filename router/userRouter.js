@@ -1,6 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
-const userModel = require("../model/userModel");
+const userModel = require("../models/userModel");
 
 //Lấy thông tin người dùng
 userRouter.get("/:userId", (req, res) => {
