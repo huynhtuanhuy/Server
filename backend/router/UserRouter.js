@@ -55,6 +55,17 @@ userRouter.put('/:userId', (req, res) => {
         .catch(err => res.send(500).status({ success: 0, err }));
 })
 
+
+//Lấy tất cả User
+userRouter.get('/', (req,res) => {
+    userModel.find({})
+        .then(userFound => {
+            res.status(201).send({ success: 1, userFound })
+        })
+        .catch((err) => res.status(500).send({ success: 0, err }));
+})
+
+
 //Tạo thông tin người dùng
 userRouter.post("/", (req, res) => {
     const { facebookID, name, email, avatarUrl, gender } = req.body;

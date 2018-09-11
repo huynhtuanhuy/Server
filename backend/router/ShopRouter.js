@@ -62,13 +62,13 @@ shopRouter.get('/:id', (req,res) => {
         .populate('owner', "name")
         .populate('comments.owner', 'name _id')
         .populate('productList')
-        // .populate('listOrder')
-        // .populate('listOrder.orderList.product.shopID', 'owner _id')
+        .populate('listOrder')
+        // .populate('listOrder.orderList.product')
         .exec((err, shopFound) => {
             if(err) res.status(500).send({success: 0, err});
             if(!shopFound) res.status(404).send({success: 0, message: 'Shop Not Found'});
             else {
-                console.log(shopFound);
+                // console.log(shopFound);
                 // console.log("ahih");
                 res.send({success: 1, shopFound});
             };
